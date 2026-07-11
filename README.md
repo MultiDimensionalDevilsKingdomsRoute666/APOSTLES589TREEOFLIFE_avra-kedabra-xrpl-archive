@@ -22,7 +22,6 @@ Then open the printed URL (usually http://localhost:5173).
 
 - [HOW_IT_WORKS.md](./HOW_IT_WORKS.md) — architecture and data flow
 - [RUNNING.md](./RUNNING.md) — running the app locally
-- [CHECKLIST.md](./CHECKLIST.md) — project checklist
 
 ## Tech stack
 
