@@ -14,12 +14,20 @@
   @media (max-width: 640px) {
     padding: 24px 16px 88px;
   }
+
+  @media (max-width: 420px) {
+    padding: 20px 12px 108px;
+  }
 }
 
 .app-title-row {
   display: flex;
   align-items: center;
   gap: 14px;
+
+  @media (max-width: 420px) {
+    gap: 10px;
+  }
 }
 
 .app-title-row h1 {
@@ -37,6 +45,11 @@
   flex-shrink: 0;
   color: var(--accent);
   filter: drop-shadow(0 0 10px var(--accent-glow));
+
+  @media (max-width: 480px) {
+    width: 30px;
+    height: 30px;
+  }
 }
 
 .app-subtitle {
@@ -56,6 +69,11 @@
   color: var(--text);
   background: var(--code-bg);
   border-top: 1px solid var(--border);
+
+  @media (max-width: 420px) {
+    font-size: 0.78em;
+    line-height: 1.4;
+  }
 }
 
 .app-footer::before {
@@ -71,7 +89,8 @@
 .info-links {
   display: flex;
   align-items: center;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 12px 20px;
   margin-top: -8px;
 }
 

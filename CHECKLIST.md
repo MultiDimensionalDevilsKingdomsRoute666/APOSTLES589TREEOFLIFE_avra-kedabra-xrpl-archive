@@ -52,18 +52,18 @@ Simple static SPA that scans an XRPL address's transaction history and decodes a
 - [x] Cancel/disconnect the in-flight scan on unmount or when `start()` is called again mid-scan
 
 ## 5. UI Components
-- [ ] `AddressInput`: `{ onSubmit(address), disabled? }` — validates format before calling `onSubmit`
-- [ ] `ConnectionStatus`: `{ status, progress }` — active endpoint, reconnect attempts, txs scanned / memos found
-- [ ] `FilterBar`: `{ onFilterChange(filter), disabled? }` — date range + free-text search
-- [ ] `ResultsList`: `{ results, explorerBaseUrl }` — tx date, hash, counterparty, memo(s), explorer link
-- [ ] `MemoCard`: `{ memo: DecodedMemo }` — renders json/text/raw appropriately
-- [ ] `App.tsx`: composes the above, holds `useScan()` + local `ResultFilter` state, derives filtered results via `useMemo`
-- [ ] Empty state: address with no memos
-- [ ] Error state: invalid address / all endpoints unreachable
+- [x] `AddressInput`: `{ onSubmit(address), disabled? }` — validates format before calling `onSubmit`
+- [x] `ConnectionStatus`: `{ status, progress }` — active endpoint, txs scanned / memos found
+- [x] `FilterBar`: `{ onFilterChange(filter), disabled? }` — date range + free-text search
+- [x] `ResultsList`: `{ results, explorerBaseUrl }` — tx date, hash, counterparty, memo(s), explorer link
+- [x] `MemoCard`: `{ memo: DecodedMemo }` — renders json/text/raw appropriately
+- [x] `App.tsx`: composes the above, holds `useScan()` + local `ResultFilter` state, derives filtered results via `useMemo`
+- [x] Empty state: address with no memos
+- [x] Error state: invalid address / all endpoints unreachable
 
 ## 6. Polish & Deploy
-- [ ] Handle addresses with zero transactions gracefully
-- [ ] Mobile-responsive basic layout
+- [x] Handle addresses with zero transactions gracefully
+- [x] Mobile-responsive basic layout
 - [ ] Deploy as static site (Vercel/Netlify/GitHub Pages)
 - [ ] Manual test against a few known addresses (e.g. a low-activity personal address and a high-volume exchange address) to confirm pagination and fallback actually work
 

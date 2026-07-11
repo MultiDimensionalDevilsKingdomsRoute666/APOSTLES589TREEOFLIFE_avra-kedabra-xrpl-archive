@@ -57,6 +57,7 @@ function App() {
   const showResults =
     state.status === "scanning" || state.status === "capped" || state.status === "done";
   const isEmptyResult = state.status === "done" && state.results.length === 0;
+  const hasNoTransactionHistory = isEmptyResult && state.progress.txsScanned === 0;
 
   function handleSubmit(address: string) {
     setFilter({});
@@ -177,7 +178,13 @@ function App() {
         </>
       )}
 
-      {isEmptyResult && <p className="results-empty">NO MEMOS FOUND FOR THIS ADDRESS.</p>}
+      {isEmptyResult && (
+        <p className="results-empty">
+          {hasNoTransactionHistory
+            ? "THIS ADDRESS HAS NO TRANSACTION HISTORY."
+            : "NO MEMOS FOUND FOR THIS ADDRESS."}
+        </p>
+      )}
 
       {hasRun && (
         <button type="button" className="reset-button" onClick={handleReset}>
