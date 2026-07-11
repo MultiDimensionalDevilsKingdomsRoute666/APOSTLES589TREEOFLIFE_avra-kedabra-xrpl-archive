@@ -5,6 +5,7 @@ import { FilterBar } from "./components/FilterBar";
 import { Logo } from "./components/Logo";
 import { NetworkToggle } from "./components/NetworkToggle";
 import { ResultsList, type NumberedMemoResult } from "./components/ResultsList";
+import { SocialLinks } from "./components/SocialLinks";
 import { useScan } from "./hooks/useScan";
 import { NETWORKS, loadStoredNetworkId, storeNetworkId } from "./lib/networks";
 import type { MemoResult, NetworkId, ResultFilter } from "./lib/types";
@@ -206,16 +207,19 @@ function App() {
     </main>
 
     <footer className="app-footer">
-      //PROFESSIONAL WEB TOOL(S) ENGINEERED WITH PASSION BY{" "}
-      <a
-        href="https://github.com/Ghostrayu"
-        target="_blank"
-        rel="noreferrer"
-        className="app-credit-name"
-      >
-        GHOST RAYU
-      </a>
-      .
+      <p className="app-footer-credit">
+        //PROFESSIONAL WEB TOOL(S) ENGINEERED WITH PASSION BY{" "}
+        <a
+          href="https://github.com/Ghostrayu"
+          target="_blank"
+          rel="noreferrer"
+          className="app-credit-name"
+        >
+          GHOST RAYU
+        </a>
+        .
+      </p>
+      <SocialLinks />
     </footer>
     </>
   );
