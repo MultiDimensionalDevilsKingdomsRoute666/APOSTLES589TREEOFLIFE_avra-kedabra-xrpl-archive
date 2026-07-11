@@ -22,3 +22,14 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local secrets / env
+.env
+.env.local
+.env.*.local
+
+# Local tool config (personal, not shared with other contributors)
+.claude/settings.local.json
+
+# Contest/submission drafts — not part of the open-source project
+DEV_SUBMISSION.md
