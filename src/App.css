@@ -140,6 +140,47 @@
   text-decoration: underline;
 }
 
+/* NetworkToggle */
+.network-toggle {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-self: flex-start;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--code-bg);
+}
+
+.network-toggle-option {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 6px 14px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.network-toggle-option:hover:not(:disabled):not([data-active="true"]) {
+  color: var(--text-h);
+}
+
+.network-toggle-option[data-active="true"] {
+  background: linear-gradient(135deg, var(--accent), #7e14ff);
+  color: #fff;
+  box-shadow: 0 4px 14px var(--accent-glow);
+}
+
+.network-toggle-option:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 /* AddressInput */
 .address-input {
   display: flex;

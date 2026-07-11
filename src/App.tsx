@@ -3,12 +3,12 @@ import { AddressInput } from "./components/AddressInput";
 import { ConnectionStatus } from "./components/ConnectionStatus";
 import { FilterBar } from "./components/FilterBar";
 import { Logo } from "./components/Logo";
+import { NetworkToggle } from "./components/NetworkToggle";
 import { ResultsList, type NumberedMemoResult } from "./components/ResultsList";
 import { useScan } from "./hooks/useScan";
-import type { MemoResult, ResultFilter } from "./lib/types";
+import { NETWORKS, loadStoredNetworkId, storeNetworkId } from "./lib/networks";
+import type { MemoResult, NetworkId, ResultFilter } from "./lib/types";
 import "./App.css";
-
-const EXPLORER_BASE_URL = "https://livenet.xrpl.org/transactions/";
 
 function matchesFilter(result: MemoResult, filter: ResultFilter): boolean {
   const day = result.date.slice(0, 10);
@@ -41,6 +41,8 @@ function App() {
   const [scanKey, setScanKey] = useState(0);
   const [showHowItWorks, setShowHowItWorks] = useState(false);
   const [showUseCases, setShowUseCases] = useState(false);
+  const [networkId, setNetworkId] = useState<NetworkId>(() => loadStoredNetworkId());
+  const network = NETWORKS[networkId];
 
   const numberedResults = useMemo<NumberedMemoResult[]>(
     () => state.results.map((result, index) => ({ ...result, refNumber: index + 1 })),
@@ -62,10 +64,19 @@ function App() {
   function handleSubmit(address: string) {
     setFilter({});
     setScanKey((key) => key + 1);
-    start(address);
+    start(address, network.endpoints);
   }
 
   function handleReset() {
+    setFilter({});
+    setScanKey((key) => key + 1);
+    reset();
+  }
+
+  function handleNetworkChange(id: NetworkId) {
+    if (id === networkId) return;
+    setNetworkId(id);
+    storeNetworkId(id);
     setFilter({});
     setScanKey((key) => key + 1);
     reset();
@@ -155,6 +166,7 @@ function App() {
         </div>
       )}
 
+      <NetworkToggle value={networkId} onChange={handleNetworkChange} disabled={isBusy} />
       <AddressInput onSubmit={handleSubmit} disabled={isBusy} />
 
       {hasRun && <ConnectionStatus status={state.status} progress={state.progress} />}
@@ -174,7 +186,7 @@ function App() {
       {showResults && !isEmptyResult && (
         <>
           <FilterBar key={scanKey} onFilterChange={setFilter} disabled={state.results.length === 0} />
-          <ResultsList results={filteredResults} explorerBaseUrl={EXPLORER_BASE_URL} />
+          <ResultsList results={filteredResults} explorerBaseUrl={network.explorerBaseUrl} />
         </>
       )}
 

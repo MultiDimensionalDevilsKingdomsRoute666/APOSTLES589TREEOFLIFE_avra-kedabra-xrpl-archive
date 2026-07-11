@@ -1,3 +1,12 @@
+export type NetworkId = "xrpl" | "xahau";
+
+export interface NetworkConfig {
+  id: NetworkId;
+  label: string;
+  endpoints: string[];
+  explorerBaseUrl: string;
+}
+
 export type ScanStatus = "idle" | "connecting" | "scanning" | "capped" | "done" | "error";
 
 export interface ScanProgress {

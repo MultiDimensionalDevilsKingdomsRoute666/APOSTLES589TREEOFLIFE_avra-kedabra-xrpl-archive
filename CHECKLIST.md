@@ -67,6 +67,38 @@ Simple static SPA that scans an XRPL address's transaction history and decodes a
 - [ ] Deploy as static site (Vercel/Netlify/GitHub Pages)
 - [ ] Manual test against a few known addresses (e.g. a low-activity personal address and a high-volume exchange address) to confirm pagination and fallback actually work
 
+## 7. Multi-Network Support (XRPL + Xahau) — requirements
+
+Xahau is a rippled-derived sidechain: same `account_tx` RPC shape, same
+classic-address format/checksum, so the existing client, decoder, and scan
+loop should work unchanged once pointed at Xahau endpoints. The network
+becomes a **selectable input** rather than a hardcoded constant.
+
+**Confirmed decisions:**
+- [x] Scope: XRPL Mainnet + Xahau Mainnet only (no testnets for now)
+- [x] Switching networks always resets scan state (cancels in-flight scan, clears results + filters) — a result set only ever belongs to one network
+- [x] Selected network persists across reloads via `localStorage`; defaults to XRPL Mainnet when unset
+- [x] Xahau endpoint fallback list: `wss://xahau.network` (primary), `wss://xahau.org` (alias, some ad-blockers block `.network`) — network ID 21337
+- [x] Xahau explorer base URL: `https://xahauexplorer.com/tx/` (note: path segment is `/tx/`, not XRPL's `/transactions/`)
+
+**Functional requirements:**
+- [x] Network config becomes data, not a constant: `{ id, label, endpoints[], explorerBaseUrl }` for `xrpl` and `xahau` (`lib/networks.ts`)
+- [x] Toggle/switch component lets the user pick the active network before scanning (`NetworkToggle`, next to `AddressInput`)
+- [x] `XrplClient` accepts an endpoint list per instance (already supported via `XrplClientOptions.endpoints`; `useScan.start()` now takes `endpoints` and passes the selected network's list)
+- [x] `ResultsList`'s `explorerBaseUrl` prop is derived from the active network, not hardcoded in `App.tsx`
+- [x] Active network stays visually unambiguous — `NetworkToggle` remains visible (disabled, not hidden) through every scan state
+- [x] Toggle is disabled while `isBusy` (connecting/scanning); switching networks resets scan state (cancels in-flight scan, clears results/filters) and persists the choice to `localStorage`
+
+**Non-functional:**
+- [x] No new dependencies — same `xrpl.js` `Client` works against both networks (Xahau speaks the same WebSocket JSON-RPC protocol)
+- [x] Stays backend-free and client-side only
+- [x] Toggle doesn't break the existing mobile-responsive layout (wraps at narrow widths)
+
+**Resolved questions:**
+- [x] Toggle placement: next to `AddressInput`
+- [x] Labels: "XRPL Mainnet / Xahau Mainnet"
+- [x] X-address network-ID mismatch: accept regardless — `addressValidation.ts` stays structural-only, no per-network checksum check
+
 ## Open Decisions (confirm before/while building)
 - [ ] Pick block explorer for tx links (Bithomp / XRPScan / livenet.xrpl.org)
 - [ ] Confirm fallback endpoint list/order

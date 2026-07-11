@@ -54,13 +54,14 @@ function errorMessage(error: unknown): string {
 }
 
 export interface UseScanOptions {
-  createClient?: () => XrplClient;
+  createClient?: (endpoints: string[]) => XrplClient;
 }
 
 export function useScan(options: UseScanOptions = {}) {
   const createClientOption = options.createClient;
   const createClient = useCallback(
-    () => (createClientOption ? createClientOption() : new XrplClient()),
+    (endpoints: string[]) =>
+      createClientOption ? createClientOption(endpoints) : new XrplClient({ endpoints }),
     [createClientOption],
   );
   const [state, setState] = useState<ScanState>(initialState);
@@ -120,14 +121,14 @@ export function useScan(options: UseScanOptions = {}) {
   }, []);
 
   const start = useCallback(
-    (address: string) => {
+    (address: string, endpoints: string[]) => {
       scanIdRef.current += 1;
       const scanId = scanIdRef.current;
 
       const previousClient = sessionRef.current?.client;
       if (previousClient) void previousClient.disconnect();
 
-      const client = createClient();
+      const client = createClient(endpoints);
       sessionRef.current = {
         client,
         address,
