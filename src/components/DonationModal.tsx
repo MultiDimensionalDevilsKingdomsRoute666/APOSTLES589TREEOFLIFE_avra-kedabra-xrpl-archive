@@ -109,7 +109,7 @@ export function DonationModal({ open, onClose }: DonationModalProps) {
               <p>SCAN WITH XAMAN TO DONATE</p>
               <img
                 src={state.qrPng}
-                alt="Xaman payment request QR code for 10 XRP"
+                alt="Xaman payment request QR code"
                 className="donation-modal-qr"
               />
               <a
