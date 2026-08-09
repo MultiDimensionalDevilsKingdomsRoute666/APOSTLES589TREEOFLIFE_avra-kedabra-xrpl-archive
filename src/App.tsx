@@ -1,7 +1,8 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { AddressInput } from "./components/AddressInput";
 import { BackToTop } from "./components/BackToTop";
 import { ConnectionStatus } from "./components/ConnectionStatus";
+import { DonationModal } from "./components/DonationModal";
 import { FilterBar } from "./components/FilterBar";
 import { Logo } from "./components/Logo";
 import { NetworkToggle } from "./components/NetworkToggle";
@@ -37,10 +38,9 @@ function matchesFilter(result: MemoResult, filter: ResultFilter): boolean {
   return true;
 }
 
-function FooterContact({ showLabel = true }: { showLabel?: boolean }) {
+function FooterContact() {
   return (
     <div className="app-footer-contact">
-      {showLabel && <span className="app-footer-contact-label">CONTACT</span>}
       <SocialLinks />
     </div>
   );
@@ -53,6 +53,8 @@ function App() {
   const [showHowItWorks, setShowHowItWorks] = useState(false);
   const [showUseCases, setShowUseCases] = useState(false);
   const [networkId, setNetworkId] = useState<NetworkId>(() => loadStoredNetworkId());
+  const [showDonationModal, setShowDonationModal] = useState(false);
+  const donationTriggerRef = useRef<HTMLButtonElement>(null);
   const network = NETWORKS[networkId];
 
   const numberedResults = useMemo<NumberedMemoResult[]>(
@@ -216,13 +218,31 @@ function App() {
       )}
 
       <footer className="app-footer-inline">
-        <FooterContact showLabel={false} />
+        <FooterContact />
       </footer>
     </main>
 
     <footer className="app-footer">
-      <FooterContact />
+      <p className="app-footer-donate">
+        //APPRECIATE THE TOOLING? CONSIDER{" "}
+        <button
+          type="button"
+          className="app-footer-donate-trigger"
+          onClick={() => setShowDonationModal(true)}
+          ref={donationTriggerRef}
+        >
+          DONATING
+        </button>
+      </p>
     </footer>
+
+    <DonationModal
+      open={showDonationModal}
+      onClose={() => {
+        setShowDonationModal(false);
+        donationTriggerRef.current?.focus();
+      }}
+    />
 
     <BackToTop />
     </>

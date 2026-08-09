@@ -33,3 +33,6 @@ dist-ssr
 
 # Contest/submission drafts — not part of the open-source project
 DEV_SUBMISSION.md
+
+# Local Netlify folder
+.netlify

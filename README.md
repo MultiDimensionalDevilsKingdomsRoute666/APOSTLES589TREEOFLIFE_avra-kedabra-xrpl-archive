@@ -5,9 +5,9 @@ history and decoding any memos attached to those transactions.
 
 Enter an XRPL address, and the app streams in its past transactions,
 extracts any `Memos` fields, decodes them from hex into readable text/JSON,
-and lets you filter the results by date or search text. It's entirely
-client-side — no backend, no database, no API keys. It talks directly to
-public XRPL nodes over WebSockets.
+and lets you filter the results by date or search text. The scanner itself
+is entirely client-side — no backend, no database, no API keys — and talks
+directly to public XRPL nodes over WebSockets.
 
 ## Getting started
 
@@ -16,7 +16,8 @@ npm install
 npm run dev
 ```
 
-Then open the printed URL (usually http://localhost:5173).
+Then open the printed URL (usually http://localhost:5173). This runs the
+scanner itself
 
 ## More details
 
