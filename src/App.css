@@ -64,8 +64,9 @@
   right: 0;
   z-index: 10;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   text-align: center;
   padding: 10px 16px;
@@ -73,20 +74,47 @@
   color: var(--text);
   background: var(--code-bg);
   border-top: 1px solid var(--border);
+  overflow-x: auto;
 
   @media (max-width: 420px) {
-    font-size: 0.78em;
+    font-size: 0.72em;
     line-height: 1.4;
   }
 }
 
-.app-footer-credit {
-  margin: 0;
+.app-footer-inline {
+  margin-top: 12px;
+  padding: 20px 16px;
+  border-top: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--code-bg);
+  text-align: center;
+  font-size: 0.9em;
+}
+
+.app-footer-contact {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 16px;
+  white-space: nowrap;
+}
+
+.app-footer-contact-label {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  flex-shrink: 0;
 }
 
 .app-footer-links {
   display: flex;
+  flex-direction: row;
   align-items: center;
+  flex-wrap: nowrap;
+  justify-content: center;
   gap: 16px;
 }
 
@@ -104,6 +132,59 @@
 .app-footer-icon {
   width: 18px;
   height: 18px;
+}
+
+.app-footer-link--text {
+  font-weight: 700;
+  color: #ffd700;
+  text-decoration: none;
+}
+
+.app-footer-link--text:hover {
+  text-decoration: underline;
+  color: #ffd700;
+}
+
+.back-to-top {
+  position: fixed;
+  right: 20px;
+  bottom: 88px;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid var(--accent-border);
+  border-radius: 50%;
+  background: var(--code-bg);
+  color: var(--accent);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+
+  @media (max-width: 640px) {
+    right: 14px;
+    bottom: 108px;
+    width: 38px;
+    height: 38px;
+  }
+
+  @media (max-width: 420px) {
+    bottom: 132px;
+  }
+}
+
+.back-to-top:hover {
+  color: var(--text-h);
+  box-shadow: 0 0 12px var(--accent-glow), var(--shadow);
+  transform: translateY(-2px);
+}
+
+.back-to-top-icon {
+  width: 20px;
+  height: 20px;
 }
 
 .app-footer::before {
@@ -158,16 +239,6 @@
   border-radius: 8px;
   font-size: 0.9em;
   line-height: 1.5;
-}
-
-.app-credit-name {
-  color: #ffd700;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.app-credit-name:hover {
-  text-decoration: underline;
 }
 
 /* NetworkToggle */

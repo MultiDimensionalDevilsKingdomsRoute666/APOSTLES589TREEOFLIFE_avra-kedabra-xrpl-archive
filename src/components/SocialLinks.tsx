@@ -33,6 +33,14 @@ export function SocialLinks() {
           />
         </svg>
       </a>
+      <a
+        href="https://github.com/Ghostrayu"
+        target="_blank"
+        rel="noreferrer"
+        className="app-footer-link app-footer-link--text"
+      >
+        ENGINEERED WITH PASSION
+      </a>
     </div>
   );
 }

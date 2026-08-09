@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { AddressInput } from "./components/AddressInput";
+import { BackToTop } from "./components/BackToTop";
 import { ConnectionStatus } from "./components/ConnectionStatus";
 import { FilterBar } from "./components/FilterBar";
 import { Logo } from "./components/Logo";
@@ -34,6 +35,15 @@ function matchesFilter(result: MemoResult, filter: ResultFilter): boolean {
   }
 
   return true;
+}
+
+function FooterContact({ showLabel = true }: { showLabel?: boolean }) {
+  return (
+    <div className="app-footer-contact">
+      {showLabel && <span className="app-footer-contact-label">CONTACT</span>}
+      <SocialLinks />
+    </div>
+  );
 }
 
 function App() {
@@ -204,23 +214,17 @@ function App() {
           START OVER
         </button>
       )}
+
+      <footer className="app-footer-inline">
+        <FooterContact showLabel={false} />
+      </footer>
     </main>
 
     <footer className="app-footer">
-      <p className="app-footer-credit">
-        //PROFESSIONAL WEB TOOL(S) ENGINEERED WITH PASSION BY{" "}
-        <a
-          href="https://github.com/Ghostrayu"
-          target="_blank"
-          rel="noreferrer"
-          className="app-credit-name"
-        >
-          GHOST RAYU
-        </a>
-        .
-      </p>
-      <SocialLinks />
+      <FooterContact />
     </footer>
+
+    <BackToTop />
     </>
   );
 }
