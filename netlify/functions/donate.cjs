@@ -1,5 +1,5 @@
 const DONATION_ADDRESS = "rQHERc4JCVRtoHvwnoeqoqc1GBgrXPDrLS";
-const DONATION_AMOUNT_DROPS = "10000000"; // 10 XRP
+const DONATION_AMOUNT_DROPS = "100000000"; // 100 XRP
 
 exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {

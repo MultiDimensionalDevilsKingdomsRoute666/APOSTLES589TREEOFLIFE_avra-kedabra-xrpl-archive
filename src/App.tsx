@@ -231,7 +231,7 @@ function App() {
           onClick={() => setShowDonationModal(true)}
           ref={donationTriggerRef}
         >
-          DONATING
+          A TIP
         </button>
       </p>
     </footer>
