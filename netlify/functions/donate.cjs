@@ -43,7 +43,7 @@ exports.handler = async (event) => {
     return {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ qrPng, deepLink }),
+      body: JSON.stringify({ qrPng, deepLink, address: DONATION_ADDRESS }),
     };
   } catch {
     return { statusCode: 502, body: JSON.stringify({ error: "Failed to create payment request" }) };

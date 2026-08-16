@@ -3,30 +3,36 @@ import { useCallback, useEffect, useRef, useState } from "react";
 type DonationState =
   | { status: "loading" }
   | { status: "error" }
-  | { status: "ready"; qrPng: string; deepLink: string };
+  | { status: "ready"; qrPng: string; deepLink: string; address: string };
 
 type DonationModalProps = {
   open: boolean;
   onClose: () => void;
 };
 
-async function requestDonationPayload(): Promise<{ qrPng: string; deepLink: string }> {
+async function requestDonationPayload(): Promise<{ qrPng: string; deepLink: string; address: string }> {
   const response = await fetch("/.netlify/functions/donate", { method: "POST" });
   if (!response.ok) throw new Error("request failed");
   const data = await response.json();
-  if (typeof data.qrPng !== "string" || typeof data.deepLink !== "string") {
+  if (
+    typeof data.qrPng !== "string" ||
+    typeof data.deepLink !== "string" ||
+    typeof data.address !== "string"
+  ) {
     throw new Error("malformed response");
   }
-  return { qrPng: data.qrPng, deepLink: data.deepLink };
+  return { qrPng: data.qrPng, deepLink: data.deepLink, address: data.address };
 }
 
 export function DonationModal({ open, onClose }: DonationModalProps) {
   const [state, setState] = useState<DonationState>({ status: "loading" });
+  const [copied, setCopied] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const load = useCallback(() => {
     setState({ status: "loading" });
+    setCopied(false);
     requestDonationPayload()
       .then((result) => setState({ status: "ready", ...result }))
       .catch(() => setState({ status: "error" }));
@@ -35,6 +41,16 @@ export function DonationModal({ open, onClose }: DonationModalProps) {
   useEffect(() => {
     if (open) load();
   }, [open, load]);
+
+  const copyAddress = useCallback((address: string) => {
+    navigator.clipboard
+      .writeText(address)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -80,7 +96,7 @@ export function DonationModal({ open, onClose }: DonationModalProps) {
         onClick={(event) => event.stopPropagation()}
       >
         <div className="donation-modal-header">
-          <h2 id="donation-modal-title">DEV DONATIONS -THANKS</h2>
+          <h2 id="donation-modal-title">DEV TIPS -THANKS</h2>
           <button
             type="button"
             className="donation-modal-close"
@@ -106,7 +122,7 @@ export function DonationModal({ open, onClose }: DonationModalProps) {
 
           {state.status === "ready" && (
             <>
-              <p>SCAN WITH XAMAN TO DONATE</p>
+              <p>SCAN WITH XAMAN TO TIP</p>
               <img
                 src={state.qrPng}
                 alt="Xaman payment request QR code"
@@ -120,6 +136,14 @@ export function DonationModal({ open, onClose }: DonationModalProps) {
               >
                 OPEN IN XAMAN
               </a>
+              <code className="donation-modal-address">{state.address}</code>
+              <button
+                type="button"
+                className="donation-modal-copy-button"
+                onClick={() => copyAddress(state.address)}
+              >
+                {copied ? "COPIED!" : "COPY ADDRESS"}
+              </button>
             </>
           )}
         </div>

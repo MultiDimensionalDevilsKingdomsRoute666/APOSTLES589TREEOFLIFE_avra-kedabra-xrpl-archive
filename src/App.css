@@ -241,6 +241,33 @@
   box-shadow: 0 6px 20px var(--accent-glow);
 }
 
+.donation-modal-address {
+  font-size: 13px;
+  word-break: break-all;
+  color: var(--text-h);
+  background: var(--bg-alt, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+
+.donation-modal-copy-button {
+  font-family: var(--sans);
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-h);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.donation-modal-copy-button:hover {
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+
 .donation-modal-retry {
   font-family: var(--sans);
   font-size: 14px;
